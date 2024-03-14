@@ -7,8 +7,12 @@ Contains a function for working on lockboxes
 def canUnlockAll(boxes):
     """
     Determines if all the boxes can be opened
-    boxes: list of lists or boxes to be opened
+    boxes: list of lists representing boxes to be opened
+            where each box contains a list of keys that can open it.
     """
+    if not isinstance(boxes, list):
+        return False
+
     if not boxes:
         return True
 
