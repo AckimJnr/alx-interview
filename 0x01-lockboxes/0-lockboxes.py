@@ -10,7 +10,7 @@ def canUnlockAll(boxes):
     boxes: list of lists or boxes to be opened
     """
     if not boxes:
-        return False
+        return True
 
     n = len(boxes)
     visited = set()
