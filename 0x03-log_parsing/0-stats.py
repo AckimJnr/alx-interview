@@ -47,8 +47,8 @@ def parse_log_line(line):
         total_file_size += file_size
         line_count += 1
     else:
-        # Skip line if it does not match the expected format
-        return
+        # Print an error message to stderr indicating the skipped line
+        sys.stderr.write(f"Skipped line: {line}\n")
 
 
 def print_stats():
