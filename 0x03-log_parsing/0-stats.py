@@ -46,6 +46,9 @@ def parse_log_line(line):
             status_code_counts[status_code] += 1
         total_file_size += file_size
         line_count += 1
+    else:
+        # Skip line if it does not match the expected format
+        return
 
 
 def print_stats():
