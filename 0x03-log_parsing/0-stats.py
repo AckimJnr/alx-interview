@@ -9,7 +9,7 @@ import signal
 
 status_code_counts = {
     200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0
-    }
+}
 
 total_file_size = 0
 
@@ -65,4 +65,8 @@ for line in sys.stdin:
 
 # Print statistics for remaining lines if less than 10 lines are processed
 if line_count > 0:
+    print_stats()
+
+# Print statistics even if there is no input
+if line_count == 0:
     print_stats()
