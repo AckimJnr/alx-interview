@@ -60,5 +60,9 @@ signal.signal(signal.SIGINT, signal_handler)
 
 for line in sys.stdin:
     parse_log_line(line.strip())
-    if line_count % 10 == 0:
+    if line_count % 10 == 0 and line_count != 0:
         print_stats()
+
+# Print statistics for remaining lines if less than 10 lines are processed
+if line_count > 0:
+    print_stats()
