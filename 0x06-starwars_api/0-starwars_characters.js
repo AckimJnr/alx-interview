@@ -3,13 +3,41 @@ const request = require('request');
 const host = "https://swapi-api.alx-tools.com/api/films/";
 
 if (process.argv.length < 3){
-	console.log("Usage: files MovieID");
-	return
+    console.log("Usage: files MovieID");
+    return;
 }
 const movie_id = process.argv[2];
 
 const url = host + movie_id; 
 
 request(url, function (error, response, body){
-	console.log(response);
+    if (error) {
+        console.error("Error:", error);
+        return;
+    }
+    
+    if (response.statusCode !== 200) {
+        console.error("Status code:", response.statusCode);
+        return;
+    }
+    
+    const film = JSON.parse(body);
+    const characters = film.characters;
+    
+    characters.forEach(function(characterUrl) {
+        request(characterUrl, function(error, response, body) {
+            if (error) {
+                console.error("Error:", error);
+                return;
+            }
+            
+            if (response.statusCode !== 200) {
+                console.error("Status code:", response.statusCode);
+                return;
+            }
+            
+            const character = JSON.parse(body);
+            console.log(character.name);
+        });
+    });
 });
