@@ -8,36 +8,40 @@ if (process.argv.length < 3) {
 }
 const movieId = process.argv[2];
 
-const url = host + movieId;
+function fetchData (url) {
+  return new Promise((resolve, reject) => {
+    request(url, (error, response, body) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+      if (response.statusCode !== 200) {
+        reject(new Error(`Status code: ${response.statusCode}`));
+        return;
+      }
+      resolve(JSON.parse(body));
+    });
+  });
+}
 
-request(url, function (error, response, body) {
-  if (error) {
+async function getCharacters (movieId) {
+  try {
+    const film = await fetchData(host + movieId);
+    const characters = film.characters;
+    const characterPromises = characters.map(characterUrl => fetchData(characterUrl));
+    return Promise.all(characterPromises);
+  } catch (error) {
     console.error('Error:', error);
     process.exit();
   }
+}
 
-  if (response.statusCode !== 200) {
-    console.error('Status code:', response.statusCode);
+(async () => {
+  try {
+    const characters = await getCharacters(movieId);
+    characters.forEach(character => console.log(character.name));
+  } catch (error) {
+    console.error('Error:', error);
     process.exit();
   }
-
-  const film = JSON.parse(body);
-  const characters = film.characters;
-
-  characters.forEach(function (characterUrl) {
-    request(characterUrl, function (error, response, body) {
-      if (error) {
-        console.error('Error:', error);
-        process.exit();
-      }
-
-      if (response.statusCode !== 200) {
-        console.error('Status code:', response.statusCode);
-        process.exit();
-      }
-
-      const character = JSON.parse(body);
-      console.log(character.name);
-    });
-  });
-});
+})();
