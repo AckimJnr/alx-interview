@@ -13,6 +13,9 @@ def makeChange(coins, total):
     Return:
         Total coins
     """
+    if total <= 0:
+        return 0
+
     dp = [float('inf')] * (total + 1)
     dp[0] = 0
 
