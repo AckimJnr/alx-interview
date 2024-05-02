@@ -16,14 +16,16 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    coins.sort(reverse=True)
+    coins.sort(reverse=True)  # Sort coins in descending order
 
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
+    num_coins = 0
+    remaining_total = total
 
     for coin in coins:
-        for i in range(coin, total + 1):
-            if dp[i - coin] != float('inf'):
-                dp[i] = min(dp[i], dp[i - coin] + 1)
+        if coin <= remaining_total:
+            num_coins += remaining_total // coin
+            remaining_total %= coin
+            if remaining_total == 0:
+                return num_coins
 
-    return dp[total] if dp[total] != float('inf') else - 1
+    return -1
