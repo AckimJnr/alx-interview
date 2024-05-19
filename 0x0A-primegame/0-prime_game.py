@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """Prime Game"""
-from typing import List
 
 
-def isWinner(x: int, nums: List) -> str:
+def isWinner(x, nums):
     """
     Determines the winner based on the given integer and list of integers.
     Args:
