@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """makeChange module"""
 
+
 def makeChange(coins: list[int], total: int) -> int:
     """
     An algorithm calculating change given a pile of coins.
