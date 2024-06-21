@@ -1,6 +1,16 @@
 #!/usr/bin/python3
+"""makeChange module"""
 
-def makeChange(coins, total):
+
+def makeChange(coins: int, total: int) -> int:
+    """
+    An algorithm calculating change give a pile of coins
+    Args:
+        coins: list of integers
+        total: integer
+    Returns:
+        integer: minimum number of coins needed to make the total
+    """
     if total <= 0:
         return 0
 
