@@ -2,7 +2,7 @@
 """makeChange module"""
 
 
-def makeChange(coins: int, total: int) -> int:
+def makeChange(coins, total) -> int:
     """
     An algorithm calculating change given a pile of coins.
     Args:
