@@ -2,9 +2,9 @@
 """makeChange module"""
 
 
-def makeChange(coins: int, total: int) -> int:
+def makeChange(coins: list[int], total: int) -> int:
     """
-    An algorithm calculating change give a pile of coins
+    An algorithm calculating change given a pile of coins.
     Args:
         coins: list of integers
         total: integer
@@ -14,11 +14,16 @@ def makeChange(coins: int, total: int) -> int:
     if total <= 0:
         return 0
 
-    dp = [total + 1] * (total + 1)
-    dp[0] = 0
+    dp = {0: 0}
+
+    coins.sort(reverse=True)
 
     for coin in coins:
         for x in range(coin, total + 1):
-            dp[x] = min(dp[x], dp[x - coin] + 1)
+            if x - coin in dp:
+                if x not in dp:
+                    dp[x] = dp[x - coin] + 1
+                else:
+                    dp[x] = min(dp[x], dp[x - coin] + 1)
 
-    return dp[total] if dp[total] != total + 1 else -1
+    return dp[total] if total in dp else -1
