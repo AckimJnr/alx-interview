@@ -5,6 +5,9 @@ prime game module
 
 
 def isWinner(x, nums):
+    """
+    prime game function
+    """
     if not nums or x <= 0:
         return None
 
